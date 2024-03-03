@@ -6,9 +6,14 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    # для тестов
+    def __str__(self):
+        return self.name
+
 
 class Product(BaseModel):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    users_with_access = models.ManyToManyField(User, related_name='accessible_products')
     name = models.CharField(max_length=100)
     start_datetime = models.DateTimeField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
